@@ -1,0 +1,26 @@
+/* styles/globals.css */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Inter", sans-serif; /* Apply Inter font globally */
+}
+@layer utilities {
+  .checkbox-custom {
+    @apply relative h-5 w-5 appearance-none rounded border-2 border-black bg-white checked:border-black checked:bg-black;
+  }
+  .checkbox-custom:checked::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+}
