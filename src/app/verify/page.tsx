@@ -1,4 +1,5 @@
 "use client";
+import React, { Suspense } from "react";
 import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -69,5 +70,16 @@ const Verify = () => {
     </div>
   );
 };
+const VerifyPage = () => (
+  <Suspense
+    fallback={
+      <div className="flex h-96 w-full items-center justify-center">
+        Loading...
+      </div>
+    }
+  >
+    <Verify />
+  </Suspense>
+);
 
-export default Verify;
+export default VerifyPage;
