@@ -83,7 +83,7 @@ const Categories = () => {
 
   return (
     <div className="mt-4 flex w-full items-center justify-center">
-      <div className="flex min-h-[28rem] w-[95%] flex-col gap-3 rounded-2xl border border-[#C1C1C1] p-10 md:w-[50%]">
+      <div className="flex min-h-[28rem] w-[95%] flex-col gap-3 rounded-2xl border border-[#C1C1C1] p-10 md:w-[60%]">
         <h2 className="w-full pb-3 text-center text-xl md:text-3xl">
           Please mark your interests!
         </h2>
@@ -125,45 +125,45 @@ const Categories = () => {
                 <button
                   onClick={() => handlePageChange(1)}
                   disabled={currentPage === 1}
-                  className={`rounded border px-4 py-2 ${currentPage === 1 ? "bg-gray-200 text-gray-400" : "bg-white text-black"}`}
+                  className={`rounded border px-2 py-1 md:px-4 md:py-2 ${currentPage === 1 ? "bg-gray-200 text-gray-400" : "bg-white text-black"}`}
                 >
                   {"<<"}
                 </button>
                 <button
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className={`rounded border px-4 py-2 ${currentPage === 1 ? "bg-gray-200 text-gray-400" : "bg-white text-black"}`}
+                  className={`rounded border px-2 py-1 md:px-4 md:py-2 ${currentPage === 1 ? "bg-gray-200 text-gray-400" : "bg-white text-black"}`}
                 >
                   {"<"}
                 </button>
                 {Array.from(
-                  { length: Math.min(totalPages, 6) },
+                  { length: Math.min(totalPages, 3) },
                   (_, i) => i + 1,
                 ).map((page) => (
                   <button
                     key={page}
                     onClick={() => handlePageChange(page)}
-                    className={`rounded border px-4 py-2 ${page === currentPage ? "bg-blue-500 text-white" : "bg-white text-black"}`}
+                    className={`rounded border px-2 py-1 md:px-4 md:py-2 ${page === currentPage ? "bg-blue-500 text-white" : "bg-white text-black"}`}
                   >
                     {page}
                   </button>
                 ))}
-                {totalPages > 6 && (
-                  <span className="rounded border bg-white px-4 py-2 text-black">
+                {totalPages > 3 && (
+                  <span className="rounded border bg-white px-2 py-1 text-black md:px-4 md:py-2">
                     ...
                   </span>
                 )}
                 <button
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
-                  className={`rounded border px-4 py-2 ${currentPage === totalPages ? "bg-gray-200 text-gray-400" : "bg-white text-black"}`}
+                  className={`rounded border px-2 py-1 md:px-4 md:py-2 ${currentPage === totalPages ? "bg-gray-200 text-gray-400" : "bg-white text-black"}`}
                 >
                   {">"}
                 </button>
                 <button
                   onClick={() => handlePageChange(totalPages)}
                   disabled={currentPage === totalPages}
-                  className={`rounded border px-4 py-2 ${currentPage === totalPages ? "bg-gray-200 text-gray-400" : "bg-white text-black"}`}
+                  className={`rounded border px-2 py-1 md:px-4 md:py-2 ${currentPage === totalPages ? "bg-gray-200 text-gray-400" : "bg-white text-black"}`}
                 >
                   {">>"}
                 </button>

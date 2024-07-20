@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { trpc } from "~/utils/trpc";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
 
 const Home = () => {
   const router = useRouter();
@@ -14,9 +13,8 @@ const Home = () => {
       console.log("autologin success");
       router.push(`/categories?from='home'&uid=${data.user.id}`);
     },
-    onError: (err) => {
-      // console.log("error", err);
-      toast.error(err.message);
+    onError: () => {
+      // toast.error(err.message);
       router.push("/login");
     },
   });

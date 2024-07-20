@@ -80,7 +80,7 @@ const Login = () => {
             type="submit"
             className="mt-5 cursor-pointer rounded-md bg-black py-3 text-white transition-all active:scale-95"
           >
-            CREATE ACCOUNT
+            Login
           </button>
           <div className="mt-5 flex justify-center gap-2.5 text-xs">
             <span>`Don&apos;t have an Account ?`</span>
