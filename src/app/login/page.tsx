@@ -12,20 +12,24 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const loginMutation = trpc.user.loginUser.useMutation({
     onSuccess: (data) => {
+      setIsLoading(false);
       Cookies.set("category_token", data.token); // Set the token in a cookie
       toast.success("Login Successful !");
       router.push(`/categories?from='login'&uid=${data.user.id}`);
     },
     onError: (error) => {
+      setIsLoading(false);
       toast.error(error.message);
     },
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await loginMutation.mutateAsync({ email, password });
     } catch (error) {
@@ -78,9 +82,15 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="mt-5 cursor-pointer rounded-md bg-black py-3 text-white transition-all active:scale-95"
+            className={`mt-5 w-full cursor-pointer rounded-md bg-black py-3 text-white transition-all active:scale-95 ${isLoading ? "animate-pulse" : ""} `}
           >
-            Login
+            {isLoading ? (
+              <div className="flex w-full items-center justify-center">
+                <div className="flex h-6 w-6 animate-spin items-center justify-center rounded-full border-b-2 border-orange-100"></div>
+              </div>
+            ) : (
+              "Login"
+            )}
           </button>
           <div className="mt-5 flex justify-center gap-2.5 text-xs">
             <span>`Don&apos;t have an Account ?`</span>

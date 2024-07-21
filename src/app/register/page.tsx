@@ -12,6 +12,7 @@ const RegisterPage = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const registerMutation = trpc.user.register.useMutation({
     onSuccess: async (data) => {
@@ -19,16 +20,19 @@ const RegisterPage = () => {
         data.user.email,
         data.user.verificationToken ?? "",
       );
+      setIsLoading(false);
       toast.success("Registration Successful !");
       router.push(`/verify?uid=${data.user.id}&email=${email}`);
     },
     onError: (error) => {
+      setIsLoading(false);
       toast.error(error.message);
     },
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await registerMutation.mutateAsync({ userName, email, password });
     } catch (error) {
@@ -78,9 +82,15 @@ const RegisterPage = () => {
           </div>
           <button
             type="submit"
-            className="mt-5 cursor-pointer rounded-md bg-black py-3 text-white transition-all active:scale-95"
+            className={`mt-5 cursor-pointer rounded-md bg-black py-3 text-white transition-all active:scale-95 ${isLoading ? "animate-pulse" : ""}`}
           >
-            CREATE ACCOUNT
+            {isLoading ? (
+              <div className="flex w-full items-center justify-center">
+                <div className="flex h-6 w-6 animate-spin items-center justify-center rounded-full border-b-2 border-orange-100"></div>
+              </div>
+            ) : (
+              "CREATE ACCOUNT"
+            )}
           </button>
           <div className="mt-5 flex justify-center gap-2.5 text-xs">
             <span>Have an Account ?</span>

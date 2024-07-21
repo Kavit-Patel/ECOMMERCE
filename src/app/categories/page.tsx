@@ -80,7 +80,6 @@ const Categories = () => {
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
-
   return (
     <div className="mt-4 flex w-full items-center justify-center">
       <div className="flex min-h-[28rem] w-[95%] flex-col gap-3 rounded-2xl border border-[#C1C1C1] p-10 md:w-[60%]">
@@ -94,8 +93,8 @@ const Categories = () => {
           <p className="pb-2">My saved interests!</p>
           <div className="flex flex-col justify-start gap-1">
             {isLoading ? (
-              <div className="flex h-24 w-full items-center justify-start">
-                Loading...
+              <div className="flex h-36 w-full items-center justify-center">
+                <div className="h-24 w-24 animate-spin rounded-full border-b-2 border-gray-900"></div>
               </div>
             ) : isError ? (
               <div className="flex h-24 w-full items-center justify-start">

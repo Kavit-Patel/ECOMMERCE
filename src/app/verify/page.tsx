@@ -14,18 +14,22 @@ const Verify = () => {
   const email = searchParams.get("email");
 
   const [code, setCode] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const verifyMutation = trpc.user.verifyUser.useMutation({
     onSuccess: (data) => {
+      setIsLoading(false);
       toast.success("Varification Successful !");
       Cookies.set("category_token", data.token);
       router.push(`/categories?from='verify'&uid=${data.updatedUser.id}`);
     },
     onError: (err) => {
+      setIsLoading(false);
       toast.error(err.message);
     },
   });
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     if (code.length === 6) {
       try {
         await verifyMutation.mutateAsync({ code, userId: userId ?? "" });
@@ -33,6 +37,7 @@ const Verify = () => {
         console.log("error during varification ", error);
       }
     } else {
+      setIsLoading(false);
       toast.info("Varification Code must be 6 digit long !");
       setCode("");
     }
@@ -45,7 +50,7 @@ const Verify = () => {
         </h2>
         <div className="text-center">
           <span className="text-center text-xs md:text-sm">
-            Enter the 8-digit code you received on
+            Enter the 6-digit code you received on
           </span>
           {email && (
             <p>{`${email?.split("@")[0]?.slice(0, 3)}****${email?.split("@")[1]}`}</p>
@@ -63,7 +68,13 @@ const Verify = () => {
             type="submit"
             className="mt-5 cursor-pointer rounded-md bg-black py-3 text-white transition-all active:scale-95"
           >
-            VERIFY
+            {isLoading ? (
+              <div className="flex w-full items-center justify-center">
+                <div className="flex h-6 w-6 animate-spin items-center justify-center rounded-full border-b-2 border-orange-100"></div>
+              </div>
+            ) : (
+              "VERIFY"
+            )}
           </button>
         </form>
       </div>
